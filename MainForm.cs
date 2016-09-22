@@ -10,12 +10,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using security_lab1_csharp.Core.KeyFinders;
+using security_lab1_csharp.Core.KeyImpovers;
+using security_lab1_csharp.Core.Keys;
+using security_lab1_csharp.Core.LengthFinders;
+using security_lab1_csharp.Core.Raters;
 
 namespace security_lab1_csharp
 {
     public partial class MainForm : Form
     {
-        private string key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private Key key = new KeyMono("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         private TextBox[] keyBoxes;
         private Label[] pLabels;
         private CheckBox[] fixedCheckBox;
@@ -25,7 +30,7 @@ namespace security_lab1_csharp
         private TextBox[] polyKeyBoxesSimple;
         public MainForm()
         {
-            List<KeyValuePair<string, double>> letterFreqList = Util.getTheorNGramFrequency(0).ToList();
+            List<KeyValuePair<string, double>> letterFreqList = Util.getTheorNGramFrequency(1).ToList();
             letterFreqList.Sort(
                 delegate (KeyValuePair<string, double> pair1,
                 KeyValuePair<string, double> pair2)
@@ -215,24 +220,24 @@ namespace security_lab1_csharp
         }
         private void updateDecryptedText()
         {
-            textBoxResult.Text = MonoCrypter.applyKey(textBoxSource.Text, key);
+            textBoxResult.Text = key.ApplyKey(textBoxSource.Text);
         }
-        private void updateKeyDisplay(string key)
+        private void updateKeyDisplay(KeyMono key)
         {
             for (int i = 0; i < keyBoxes.Length; i++)
             {
-                keyBoxes[i].Text = key[i] + "";
+                keyBoxes[i].Text = key.map[i] + "";
             }
-            textBoxFullKey.Text = key;
+            textBoxFullKey.Text = key.map;
             Logger.log("Key updated. New key: " + key);
         }
-        private void setKey(string newKey)
+        private void setKey(KeyMono newKey)
         {
             key = newKey;
             updateDecryptedText();
             updateKeyDisplay(newKey);
         }
-        private string getKey()
+        private Key getKey()
         {
             return key;
         }
@@ -247,20 +252,20 @@ namespace security_lab1_csharp
                 else
                     keyBuf += (char)('A' + i);
             }
-            key = keyBuf;
+            key = new KeyMono(keyBuf);
             updateDecryptedText();
         }
 
         private void buttonFind_Click(object sender, EventArgs e)
         {
             //    string newkey = Crypter.findKeyByNgramFrequency((string)textBoxSource.Text.Clone(), nGramComboBox.SelectedIndex);
-            string newkey = MonoCrypter.findKeyEvol((string)textBoxSource.Text.Clone(), nGramComboBox.SelectedIndex, 300, 100, 0.05, Util.Evristiks.COUNT);
-            setKey(newkey);
+            KeyFinderMono keyFinder = new KeyFinderMono(nGramComboBox.SelectedIndex + 1);
+            setKey((KeyMono) keyFinder.FindKey((string)textBoxSource.Text.Clone()));
         }
 
         private void textBoxSource_TextChanged(object sender, EventArgs e)
         {
-            Dictionary<string, double> realFreq = Util.getRealNGramFrequency(textBoxSource.Text, 0);
+            Dictionary<string, double> realFreq = Util.getRealNGramFrequency(textBoxSource.Text, 1);
 
             foreach (String symbol in realFreq.Keys)
             {
@@ -273,10 +278,10 @@ namespace security_lab1_csharp
 
         private void textBoxResult_TextChanged(object sender, EventArgs e)
         {
-            List<KeyValuePair<string, double>> realMonoCountsList = Util.getSortedRealNGramFrequencyList(textBoxResult.Text, 0);
-            List<KeyValuePair<string, long>> realBiCountsList = Util.getSortedRealNGramCountList(textBoxResult.Text, 1);
-            List<KeyValuePair<string, long>> realTriCountsList = Util.getSortedRealNGramCountList(textBoxResult.Text, 2);
-            List<KeyValuePair<string, long>> realQuadCountsList = Util.getSortedRealNGramCountList(textBoxResult.Text, 3);
+            List<KeyValuePair<string, double>> realMonoCountsList = Util.getSortedRealNGramFrequencyList(textBoxResult.Text, 1);
+            List<KeyValuePair<string, long>> realBiCountsList = Util.getSortedRealNGramCountList(textBoxResult.Text, 2);
+            List<KeyValuePair<string, long>> realTriCountsList = Util.getSortedRealNGramCountList(textBoxResult.Text, 3);
+            List<KeyValuePair<string, long>> realQuadCountsList = Util.getSortedRealNGramCountList(textBoxResult.Text, 4);
             
             listViewBi.Items.Clear();
             listViewTri.Items.Clear();
@@ -310,29 +315,25 @@ namespace security_lab1_csharp
         private void buttonImprove_Click(object sender, EventArgs e)
         {
             int iterCount = Int32.Parse(textBoxIterations.Text);
-            bool[] flags = new bool[fixedCheckBox.Length];
-            for (int i = 0; i < flags.Length; i++)
-            {
-                flags[i] = fixedCheckBox[i].Checked;
-            }
-            string newkey = MonoCrypter.findKeyAStar(textBoxSource.Text, key, nGramComboBox.SelectedIndex, iterCount, flags, Util.Evristiks.COUNT);
-            setKey(newkey);
+            KeyImproverAStar keyImprover = new KeyImproverAStar(new KeyRaterCount(3, textBoxSource.Text));
+            setKey((KeyMono) keyImprover.ImproveKey(key, iterCount));
         }
 
         private void buttonLogToFile_Click(object sender, EventArgs e)
         {
-            PolyCrypter.applyVigenerkey(textBoxSource.Text, PolyCrypter.findVigenerKey(textBoxSource.Text));
+            KeyFinderVigenere keyFinder = new KeyFinderVigenere();
+            textBoxResult.Text = keyFinder.FindKey(textBoxSource.Text).ApplyKey(textBoxSource.Text);
         }
 
         private void buttonSetKey_Click(object sender, EventArgs e)
         {
-            setKey(textBoxFullKey.Text);
+            setKey(new KeyMono(textBoxFullKey.Text));
         }
 
         private void buttonNGram_Click(object sender, EventArgs e)
         {
-            string newkey = MonoCrypter.findKeyByNgramFrequency((string)textBoxSource.Text.Clone(), nGramComboBox.SelectedIndex);
-            setKey(newkey);
+            KeyFinderMono keyFinderMono = new KeyFinderMono(nGramComboBox.SelectedIndex + 1);
+            setKey((KeyMono) keyFinderMono.FindKey(textBoxSource.Text));
         }
 
         private void buttonSetKeySize_Click(object sender, EventArgs e)
@@ -342,13 +343,13 @@ namespace security_lab1_csharp
 
         private void buttonGetKeySize_Click(object sender, EventArgs e)
         {
-            textBoxKeySize.Text = "" + PolyCrypter.getKeyLength(textBoxSource.Text);
+            textBoxKeySize.Text = "" + PolyKeyLengthFinder.getPolyKeyLength(textBoxSource.Text);
             setVigenereData(textBoxSource.Text);
         }
 
         private void setVigenereData(string data)
         {
-            List<KeyValuePair<string, double>>[] freqListArr = PolyCrypter.getDataAnalysis(textBoxSource.Text, Int32.Parse(textBoxKeySize.Text));
+            List<KeyValuePair<string, double>>[] freqListArr = Util.getDataAnalysis(textBoxSource.Text, Int32.Parse(textBoxKeySize.Text));
             listBoxRowsData.Items.Clear();
             for (int i = 0; i < freqListArr.Length; i++)
             {
@@ -370,22 +371,22 @@ namespace security_lab1_csharp
 
         private void buttonGetVigKey_Click(object sender, EventArgs e)
         {
-            textBoxVigKey.Text = PolyCrypter.findVigenerKey(textBoxSource.Text, Int32.Parse(textBoxKeySize.Text));
+            KeyFinderVigenere keyFinder = new KeyFinderVigenere();
+            KeyVigenere key = (KeyVigenere) keyFinder.FindKey(textBoxSource.Text);
+            textBoxResult.Text = key.ApplyKey(textBoxSource.Text);
+            textBoxVigKey.Text = key.shifts;
         }
 
         private void buttonSetVigKey_Click(object sender, EventArgs e)
         {
-            textBoxResult.Text = PolyCrypter.applyVigenerkey(textBoxSource.Text, textBoxVigKey.Text);
+            textBoxResult.Text = new KeyVigenere(textBoxVigKey.Text).ApplyKey(textBoxSource.Text);
         }
 
         private void buttonFindPoly_Click(object sender, EventArgs e)
         {
-            string[] polyKey = PolyCrypter.findPolyKey(textBoxSource.Text);
-            Logger.log("Found poly key");
-            for (int i = 0; i < polyKey.Length; i++)
-            {
-                Logger.log(i + "\t" + polyKey[i]);
-            }
+            KeyFinderPoly keyFinder = new KeyFinderPoly(new KeyImproverAStar(new KeyRaterCount(3, textBoxSource.Text)), 300);
+            KeyPoly polyKey = (KeyPoly) keyFinder.FindKey(textBoxSource.Text);
+            
             updatePolyData(polyKey);
             Logger.log("Text");
             Logger.log(textBoxResult.Text);
@@ -430,12 +431,12 @@ namespace security_lab1_csharp
                     polyKey[i] = polyKeyBoxesSimple[i].Text;
                 }
             }
-            updatePolyData(polyKey);
+            updatePolyData(new KeyPoly(polyKey));
         }
-        private void updatePolyData(string[] polyKey)
+        private void updatePolyData(KeyPoly polyKey)
         {
-            textBoxResult.Text = PolyCrypter.applyPolyKey(textBoxSource.Text, polyKey);
-            List<KeyValuePair<string, double>>[] freqsArr = PolyCrypter.getPolyMonogramFrequencies(textBoxResult.Text, polyKey.Length);
+            textBoxResult.Text = polyKey.ApplyKey(textBoxSource.Text);
+            List<KeyValuePair<string, double>>[] freqsArr = Util.getPolyMonogramFrequencies(textBoxResult.Text, polyKey.maps.Length);
 
             for (int i = 0; i < freqsArr.Length; i++)
             {
@@ -450,13 +451,13 @@ namespace security_lab1_csharp
                 }
             }
 
-            for (int row = 0; row < polyKey.Length; row++)
+            for (int row = 0; row < polyKey.maps.Length; row++)
             {
-                for (int col = 0; col < polyKey[row].Length; col++)
+                for (int col = 0; col < polyKey.maps[row].Length; col++)
                 {
-                    polyKeyBoxes[row][col].Text = polyKey[row][col] + "";
+                    polyKeyBoxes[row][col].Text = polyKey.maps[row][col] + "";
                 }
-                polyKeyBoxesSimple[row].Text = polyKey[row];
+                polyKeyBoxesSimple[row].Text = polyKey.maps[row];
             }
         }
         private void highlightChanged(object sender, EventArgs e)
@@ -513,12 +514,10 @@ namespace security_lab1_csharp
             {
                 polyKey[i] = polyKeyBoxesSimple[i].Text;
             }
-            string[] newpolykey = PolyCrypter.findPolyKeyAStar(textBoxSource.Text, polyKey, nGramComboBox.SelectedIndex, iterCount, Util.Evristiks.XI2);
+            KeyImproverAStar keyImprover = new KeyImproverAStar(new KeyRaterXi2(nGramComboBox.SelectedIndex + 1, textBoxSource.Text));
+            KeyPoly newpolykey = (KeyPoly) keyImprover.ImproveKey(new KeyPoly(polyKey), iterCount);
             Logger.log("Found poly key");
-            for (int i = 0; i < newpolykey.Length; i++)
-            {
-                Logger.log(i + "\t" + newpolykey[i]);
-            }
+
             updatePolyData(newpolykey);
             Logger.log("Text");
             Logger.log(textBoxResult.Text);

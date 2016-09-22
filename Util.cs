@@ -27,50 +27,50 @@ namespace security_lab1_csharp
 
         public static Dictionary<string, double> getTheorNGramFrequency(int method)
         {
-            if (theorNGramFreqs[method] == null)
+            if (theorNGramFreqs[method - 1] == null)
             {
                 Dictionary<string, double> dictionary = new Dictionary<string, double>();
-                string[] lines = System.IO.File.ReadAllLines(ngramFileNames[method]);
+                string[] lines = System.IO.File.ReadAllLines(ngramFileNames[method - 1]);
                 foreach (string line in lines)
                 {
                     string[] parts = line.Split(' ');
                     dictionary.Add(parts[0], Double.Parse(parts[1]) / recordNumber);
                 }
-                theorNGramFreqs[method] = dictionary;
+                theorNGramFreqs[method - 1] = dictionary;
             }
-            return theorNGramFreqs[method];
+            return theorNGramFreqs[method - 1];
         }
         public static Dictionary<string, long> getTheorNGramCounts(int method)
         {
-            if (theorNGramCounts[method] == null)
+            if (theorNGramCounts[method - 1] == null)
             {
                 Dictionary<string, long> dictionary = new Dictionary<string, long>();
-                string[] lines = System.IO.File.ReadAllLines(ngramFileNames[method]);
-                theorNGramTopCounts[method] = long.Parse(lines[0].Split(' ')[1]);
+                string[] lines = System.IO.File.ReadAllLines(ngramFileNames[method - 1]);
+                theorNGramTopCounts[method - 1] = long.Parse(lines[0].Split(' ')[1]);
                 foreach (string line in lines)
                 {
                     string[] parts = line.Split(' ');
                     dictionary.Add(parts[0], long.Parse(parts[1]));
                 }
-                theorNGramCounts[method] = dictionary;
+                theorNGramCounts[method - 1] = dictionary;
             }
-            return theorNGramCounts[method];
+            return theorNGramCounts[method - 1];
         }
         public static long getTheorTopCount(int method)
         {
-            if (theorNGramTopCounts[method] == 0)
+            if (theorNGramTopCounts[method - 1] == 0)
             {
-                string[] lines = System.IO.File.ReadAllLines(ngramFileNames[method]);
-                theorNGramTopCounts[method] = long.Parse(lines[0].Split(' ')[1]);
+                string[] lines = System.IO.File.ReadAllLines(ngramFileNames[method - 1]);
+                theorNGramTopCounts[method - 1] = long.Parse(lines[0].Split(' ')[1]);
             }
-            return theorNGramTopCounts[method];
+            return theorNGramTopCounts[method - 1];
         }
         public static Dictionary<string, double> getRealNGramFrequency(string data, int method)
         {
             Dictionary<string, double> dictionary = new Dictionary<string, double>();
             for (int i = 0; i < data.Length - method; i++)
             {
-                string ngram = data.Substring(i, method + 1);
+                string ngram = data.Substring(i, method);
                 if (!dictionary.ContainsKey(ngram))
                     dictionary.Add(ngram, ((double)Regex.Matches(data, ngram).Count) / data.Length);
             }
@@ -88,7 +88,7 @@ namespace security_lab1_csharp
             Dictionary<string, long> dictionary = new Dictionary<string, long>();
             for (int i = 0; i < data.Length - method; i++)
             {
-                string ngram = data.Substring(i, method + 1);
+                string ngram = data.Substring(i, method);
                 if (!dictionary.ContainsKey(ngram))
                     dictionary.Add(ngram, ((long)Regex.Matches(data, ngram).Count));
             }
@@ -122,6 +122,46 @@ namespace security_lab1_csharp
                     return pair2.Value.CompareTo(pair1.Value);
                 });
             return list;
+        }
+        public static List<KeyValuePair<string, double>>[] getPolyMonogramFrequencies(string data, int keySize)
+        {
+            string[] subStrings = new string[keySize];
+            List<KeyValuePair<string, double>>[] listArr = new List<KeyValuePair<string, double>>[keySize];
+            for (int i = 0; i < keySize; i++)
+            {
+                for (int j = i; j < data.Length; j += keySize)
+                {
+                    subStrings[i] += data[j];
+                }
+                listArr[i] = Util.getRealNGramFrequency(subStrings[i], 0).ToList();
+                listArr[i].Sort(
+                delegate (KeyValuePair<string, double> pair1,
+                KeyValuePair<string, double> pair2)
+                {
+                    return pair1.Key.CompareTo(pair2.Key);
+                });
+            }
+            return listArr;
+        }
+        public static List<KeyValuePair<string, double>>[] getDataAnalysis(string data, int keyLength)
+        {
+            string[] subStrings = new string[keyLength];
+
+            for (int i = 0; i < keyLength; i++)
+            {
+                for (int j = i; j < data.Length; j += keyLength)
+                {
+                    subStrings[i] += data[j];
+                }
+            }
+
+            List<KeyValuePair<string, double>>[] lstArr = new List<KeyValuePair<string, double>>[keyLength];
+            for (int i = 0; i < keyLength; i++)
+            {
+                lstArr[i] = Util.getSortedRealNGramFrequencyList(subStrings[i], 1);
+            }
+
+            return lstArr;
         }
         public static int gcd(int m, int n)
         {

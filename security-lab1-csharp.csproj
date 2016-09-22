@@ -47,7 +47,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MonoCrypter.cs" />
+    <Compile Include="Core\KeyFinders\KeyFinder.cs" />
+    <Compile Include="Core\KeyFinders\KeyFinderMono.cs" />
+    <Compile Include="Core\KeyFinders\KeyFinderPoly.cs" />
+    <Compile Include="Core\KeyFinders\KeyFinderVigenere.cs" />
+    <Compile Include="Core\KeyImpovers\KeyImprover.cs" />
+    <Compile Include="Core\KeyImpovers\KeyImproverAnnealing.cs" />
+    <Compile Include="Core\KeyImpovers\KeyImproverAStar.cs" />
+    <Compile Include="Core\Keys\Key.cs" />
+    <Compile Include="Core\Keys\KeyMono.cs" />
+    <Compile Include="Core\Keys\KeyPoly.cs" />
+    <Compile Include="Core\Keys\KeyVigenere.cs" />
+    <Compile Include="Core\LengthFinders\PolyKeyLengthFinder.cs" />
+    <Compile Include="Core\Raters\KeyRater.cs" />
+    <Compile Include="Core\Raters\KeyRaterCount.cs" />
+    <Compile Include="Core\Raters\KeyRaterEntropy.cs" />
+    <Compile Include="Core\Raters\KeyRaterMagic.cs" />
+    <Compile Include="Core\Raters\KeyRaterXi2.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -55,7 +71,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PolyCrypter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
@@ -84,6 +99,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
