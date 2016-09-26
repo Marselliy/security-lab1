@@ -48,6 +48,19 @@ namespace security_lab1_csharp.Core.Keys
             return new KeyMono((string)map.Clone());
         }
 
+        public override Key Crossbreed(Key secondKey)
+        {
+            if (!(secondKey is KeyMono))
+                throw new Exception("Only keys of same type can be crossbreeded");
+            var second = (KeyMono) secondKey;
+            
+            if (GetFitness() == -1 || second.GetFitness() == -1)
+                throw new Exception("Keys must be rated");
+
+            var ratio = GetFitness() / (GetFitness() + second.GetFitness());
+            return new KeyMono(Util.CrossbreedStrings(map, second.map, ratio));
+        }
+
         public override bool Equals(object obj)
         {
             var key = obj as KeyMono;

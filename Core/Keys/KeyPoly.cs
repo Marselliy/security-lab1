@@ -72,6 +72,24 @@ namespace security_lab1_csharp.Core.Keys
             return new KeyPoly((string[])maps.Clone());
         }
 
+        public override Key Crossbreed(Key secondKey)
+        {
+            if (!(secondKey is KeyPoly))
+                throw new Exception("Only keys of same type can be crossbreeded");
+            var second = (KeyPoly)secondKey;
+
+            if (GetFitness() == -1 || second.GetFitness() == -1)
+                throw new Exception("Keys must be rated");
+
+            var ratio = GetFitness() / (GetFitness() + second.GetFitness());
+            var resNewKey = new string[maps.Length];
+            for (var row = 0; row < resNewKey.Length; row++)
+            {
+                resNewKey[row] = Util.CrossbreedStrings(maps[row], second.maps[row], ratio);
+            }
+            return new KeyPoly(resNewKey);
+        }
+
         public static explicit operator KeyPoly(KeyMono v)
         {
             throw new NotImplementedException();

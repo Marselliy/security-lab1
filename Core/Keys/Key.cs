@@ -1,35 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using security_lab1_csharp.Core.Raters;
 
 namespace security_lab1_csharp.Core.Keys
 {
     public abstract class Key : ICloneable
     {
-        private double fitness = -1;
+        private Dictionary<KeyRater, double> fitnesses = new Dictionary<KeyRater, double>();
+        private double lastFitness;
 
         public double GetFitness(KeyRater rater)
         {
-            if (fitness == -1)
-                fitness = rater.getKeyFitness(this);
-            return fitness;
+            if (!fitnesses.ContainsKey(rater))
+                fitnesses.Add(rater, rater.getKeyFitness(this));
+            lastFitness = fitnesses[rater];
+            return lastFitness;
         }
 
         public double GetFitness()
         {
-            if (fitness == -1)
-            {
-                throw new Exception("Key fitness wasn't calculated");
-            }
-            else
-            {
-                return fitness;
-            }
+            return lastFitness;
         }
-
         public abstract string ApplyKey(string plainText);
         public abstract Key[] ExpandKey();
-
         public abstract void SlightlyModifyKey();
         public abstract object Clone();
+        public abstract Key Crossbreed(Key secondKey);
     }
 }

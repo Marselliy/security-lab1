@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -48,6 +49,19 @@ namespace security_lab1_csharp.Core.Keys
         public override object Clone()
         {
             return new KeyVigenere((string)shifts.Clone());
+        }
+
+        public override Key Crossbreed(Key secondKey)
+        {
+            if (!(secondKey is KeyVigenere))
+                throw new Exception("Only keys of same type can be crossbreeded");
+            var second = (KeyVigenere)secondKey;
+
+            if (GetFitness() == -1 || second.GetFitness() == -1)
+                throw new Exception("Keys must be rated");
+
+            var ratio = GetFitness() / (GetFitness() + second.GetFitness());
+            return new KeyVigenere(Util.CrossbreedStrings(shifts, second.shifts, ratio));
         }
     }
 }

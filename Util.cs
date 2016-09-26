@@ -19,6 +19,7 @@ namespace security_lab1_csharp
         public static Random random = new Random();
         public static string[] ngramFileNames = { "english_1grams.gram", "english_2grams.gram", "english_3grams.gram", "english_4grams.gram", "english_5grams.gram" };
         public static string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public static char[] alphabetSplitted = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
         public static string sortedalphabet = "ETAOINSRHLDCUMFGPWYBVKJXZQ";
         public static long recordNumber = 4372870785;
         public static Dictionary<string, double>[] theorNGramFreqs = new Dictionary<string, double>[5];
@@ -67,21 +68,35 @@ namespace security_lab1_csharp
         }
         public static Dictionary<string, double> getRealNGramFrequency(string data, int method)
         {
-            Dictionary<string, double> dictionary = new Dictionary<string, double>();
+            var dictionary = new Dictionary<string, double>();
             for (int i = 0; i < data.Length - method; i++)
             {
                 string ngram = data.Substring(i, method);
                 if (!dictionary.ContainsKey(ngram))
-                    dictionary.Add(ngram, ((double)Regex.Matches(data, ngram).Count) / data.Length);
-            }
-            for (int i = 0; i < alphabet.Length; i++)
-            {
-                if (!dictionary.ContainsKey(alphabet[i] + ""))
                 {
-                    dictionary.Add(alphabet[i] + "", 0);
+                    dictionary.Add(ngram, 1);
+                }
+                else
+                {
+                    dictionary[ngram]++;
                 }
             }
-            return dictionary;
+            var dictionaryRes = new Dictionary<string, double>();
+            foreach (var pair in dictionary)
+            {
+                dictionaryRes.Add(pair.Key, pair.Value / data.Length);
+            }
+            if (method == 1)
+            {
+                foreach (char t in alphabet)
+                {
+                    if (!dictionaryRes.ContainsKey(t + ""))
+                    {
+                        dictionaryRes.Add(t + "", 0);
+                    }
+                }
+            }
+            return dictionaryRes;
         }
         public static Dictionary<string, long> getRealNGramCount(string data, int method)
         {
@@ -133,7 +148,7 @@ namespace security_lab1_csharp
                 {
                     subStrings[i] += data[j];
                 }
-                listArr[i] = Util.getRealNGramFrequency(subStrings[i], 0).ToList();
+                listArr[i] = Util.getRealNGramFrequency(subStrings[i], 1).ToList();
                 listArr[i].Sort(
                 delegate (KeyValuePair<string, double> pair1,
                 KeyValuePair<string, double> pair2)
@@ -174,6 +189,50 @@ namespace security_lab1_csharp
             if (m < n)
                 return gcd(n % m, m);
             return 1;
+        }
+
+        public static string CrossbreedStrings(string str1, string str2, double ratio)
+        {
+            var newStr = new StringBuilder(new string(' ', str1.Length));
+            var alphabet = alphabetSplitted.ToList();
+            for (var i = 0; i < newStr.Length; i++)
+            {
+                var flag1 = newStr.ToString().Contains(str1[i]);
+                var flag2 = newStr.ToString().Contains(str2[i]);
+                if (flag1 && flag2)
+                    continue;
+                if (flag1)
+                {
+                    newStr[i] = str2[i];
+                    alphabet.Remove(newStr[i]);
+                    continue;
+                }
+                if (flag2)
+                {
+                    newStr[i] = str1[i];
+                    alphabet.Remove(newStr[i]);
+                    continue;
+                }
+                if (random.NextDouble() < ratio)
+                {
+                    newStr[i] = str1[i];
+                }
+                else
+                {
+                    newStr[i] = str2[i];
+                }
+                alphabet.Remove(newStr[i]);
+            }
+            alphabet = alphabet.OrderBy(x => random.Next()).ToList();
+            for (var i = 0; i < newStr.Length; i++)
+            {
+                if (newStr[i] == ' ')
+                {
+                    newStr[i] = alphabet[0];
+                    alphabet.RemoveAt(0);
+                }
+            }
+            return newStr.ToString();
         }
     }
 }

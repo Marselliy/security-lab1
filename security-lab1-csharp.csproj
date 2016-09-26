@@ -54,13 +54,16 @@
     <Compile Include="Core\KeyImpovers\KeyImprover.cs" />
     <Compile Include="Core\KeyImpovers\KeyImproverAnnealing.cs" />
     <Compile Include="Core\KeyImpovers\KeyImproverAStar.cs" />
+    <Compile Include="Core\KeyImpovers\KeyImproverGenetics.cs" />
     <Compile Include="Core\Keys\Key.cs" />
     <Compile Include="Core\Keys\KeyMono.cs" />
     <Compile Include="Core\Keys\KeyPoly.cs" />
     <Compile Include="Core\Keys\KeyVigenere.cs" />
     <Compile Include="Core\LengthFinders\PolyKeyLengthFinder.cs" />
     <Compile Include="Core\Raters\KeyRater.cs" />
+    <Compile Include="Core\Raters\KeyRaterComplex.cs" />
     <Compile Include="Core\Raters\KeyRaterCount.cs" />
+    <Compile Include="Core\Raters\KeyRaterDictionary.cs" />
     <Compile Include="Core\Raters\KeyRaterEntropy.cs" />
     <Compile Include="Core\Raters\KeyRaterMagic.cs" />
     <Compile Include="Core\Raters\KeyRaterXi2.cs" />

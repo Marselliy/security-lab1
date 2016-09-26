@@ -384,7 +384,16 @@ namespace security_lab1_csharp
 
         private void buttonFindPoly_Click(object sender, EventArgs e)
         {
-            KeyFinderPoly keyFinder = new KeyFinderPoly(new KeyImproverAStar(new KeyRaterCount(3, textBoxSource.Text)), 300);
+            //    KeyFinderPoly keyFinder = new KeyFinderPoly(new KeyImproverAStar(new KeyRaterCount(3, textBoxSource.Text)), 300);
+            //var keyFinder = new KeyFinderPoly(new KeyImproverAStar(new KeyRaterDictionary(textBoxSource.Text, new []{ "DECIPHER", "CIPHERTEXT", "MONOALPHABET", "ROUTINE" })), 1500);
+            //var keyFinder = new KeyFinderPoly(new KeyImproverAStar(new KeyRaterComplex(textBoxSource.Text,
+            //    new KeyRaterDictionary(textBoxSource.Text, new[] { "DECIPHER", "CIPHER", "ALPHABET", "VIGENERE" }),
+            //    new KeyRaterXi2(3, textBoxSource.Text)
+            //    )), 60);
+            var keyFinder = new KeyFinderPoly(new KeyImproverGenetics(100, 0.2, new KeyRaterComplex(textBoxSource.Text,
+                new KeyRaterDictionary(textBoxSource.Text, new[] { "DECIPHER", "CIPHER", "ALPHABET", "VIGENERE" }),
+                new KeyRaterXi2(3, textBoxSource.Text)
+                ), new KeyRaterCount(2, textBoxSource.Text), new KeyRaterCount(3, textBoxSource.Text)), 100);
             KeyPoly polyKey = (KeyPoly) keyFinder.FindKey(textBoxSource.Text);
             
             updatePolyData(polyKey);
