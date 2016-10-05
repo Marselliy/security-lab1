@@ -36,7 +36,7 @@ namespace security_lab1_csharp.Core.Keys
 
         public override void SlightlyModifyKey()
         {
-            var index = Util.random.Next() % 26;
+            var index = Util.random.Next() % shifts.Length;
             shifts = shifts.Substring(0, index) + shifts[index] + shifts.Substring(index + 1);
         }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using security_lab1_csharp.Core.Keys;
+using security_lab1_csharp.Core.Raters;
 
 namespace security_lab1_csharp
 {

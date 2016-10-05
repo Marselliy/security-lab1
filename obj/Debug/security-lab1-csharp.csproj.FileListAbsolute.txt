@@ -7,3 +7,16 @@ E:\Flash\Документы\ІV курс\Безопасность\security-lab1-
 E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security-lab1-csharp.csproj.GenerateResource.Cache
 E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security-lab1-csharp.exe
 E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security-lab1-csharp.pdb
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.MainFormNew.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Analysis.KeyAnalysisPanelPoly.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Analysis.KeyAnalysisPanelVigenere.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Search.KeySearchPanelMono.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Search.KeySearchPanelPoly.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Search.KeySearchPanelVigenere.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Analysis.KeyAnalysisPanel.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Improvement.KeyImprovementPanel.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Analysis.KeyAnalysisPanelGlobal.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Improvement.ImproverPanels.KeyImproverPanel.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Improvement.ImproverPanels.KeyImproverPanelAnnealing.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Improvement.ImproverPanels.KeyImproverPanelAStar.resources
+E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.View.Improvement.ImproverPanels.KeyImproverPanelGenetics.resources

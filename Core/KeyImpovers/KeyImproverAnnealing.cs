@@ -9,6 +9,15 @@ namespace security_lab1_csharp.Core.KeyImpovers
     {
         private KeyRater keyRater;
 
+        public void SetKeyRater(KeyRater rater)
+        {
+            keyRater = rater;
+        }
+
+        public KeyImproverAnnealing()
+        {
+        }
+
         public KeyImproverAnnealing(KeyRater keyRater)
         {
             this.keyRater = keyRater;

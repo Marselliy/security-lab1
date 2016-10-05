@@ -7,7 +7,14 @@ namespace security_lab1_csharp.Core.KeyImpovers
     public class KeyImproverAStar : KeyImprover
     {
         private KeyRater keyRater;
+        public void SetKeyRater(KeyRater rater)
+        {
+            keyRater = rater;
+        }
 
+        public KeyImproverAStar()
+        {
+        }
         public KeyImproverAStar(KeyRater keyRater)
         {
             this.keyRater = keyRater;
@@ -27,10 +34,6 @@ namespace security_lab1_csharp.Core.KeyImpovers
                 listExpandedKeys.Add(keys[index]);
                 keys.AddRange(keys[index].ExpandKey());
                 keys.Sort((key1, key2) => key2.GetFitness(keyRater).CompareTo(key1.GetFitness(keyRater)));
-                if (keys.Count > 50000)
-                {
-                    keys.RemoveRange(50000, keys.Count - 50000);
-                }
             }
             return keys[0];
         }

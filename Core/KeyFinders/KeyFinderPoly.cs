@@ -34,7 +34,8 @@ namespace security_lab1_csharp.Core.KeyFinders
                 keys[i] = (KeyMono)keyFinderMono.FindKey(subStrings[i]);
             }
             var keyPoly = new KeyPoly(keys);
-            keyPoly = (KeyPoly) mainImprover.ImproveKey(keyPoly, mainIters);
+            if (mainImprover != null)
+                keyPoly = (KeyPoly) mainImprover.ImproveKey(keyPoly, mainIters);
             return keyPoly;
         }
     }

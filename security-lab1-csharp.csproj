@@ -65,6 +65,7 @@
     <Compile Include="Core\Raters\KeyRaterCount.cs" />
     <Compile Include="Core\Raters\KeyRaterDictionary.cs" />
     <Compile Include="Core\Raters\KeyRaterEntropy.cs" />
+    <Compile Include="Core\Raters\KeyRaterFactory.cs" />
     <Compile Include="Core\Raters\KeyRaterMagic.cs" />
     <Compile Include="Core\Raters\KeyRaterXi2.cs" />
     <Compile Include="Logger.cs" />
@@ -74,11 +75,95 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainFormNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainFormNew.Designer.cs">
+      <DependentUpon>MainFormNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
+    <Compile Include="View\Analysis\KeyAnalysisPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Analysis\KeyAnalysisPanelFactory.cs" />
+    <Compile Include="View\Analysis\KeyAnalysisPanelGlobal.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Analysis\KeyAnalysisPanelGlobal.Designer.cs">
+      <DependentUpon>KeyAnalysisPanelGlobal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Analysis\KeyAnalysisPanelPoly.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Analysis\KeyAnalysisPanelPoly.Designer.cs">
+      <DependentUpon>KeyAnalysisPanelPoly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Analysis\KeyAnalysisPanelVigenere.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Analysis\KeyAnalysisPanelVigenere.Designer.cs">
+      <DependentUpon>KeyAnalysisPanelVigenere.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Improvement\ImproverPanels\KeyImproverPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Improvement\ImproverPanels\KeyImproverPanel.Designer.cs">
+      <DependentUpon>KeyImproverPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Improvement\ImproverPanels\KeyImproverPanelAnnealing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Improvement\ImproverPanels\KeyImproverPanelAnnealing.Designer.cs">
+      <DependentUpon>KeyImproverPanelAnnealing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Improvement\ImproverPanels\KeyImproverPanelAStar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Improvement\ImproverPanels\KeyImproverPanelAStar.Designer.cs">
+      <DependentUpon>KeyImproverPanelAStar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Improvement\ImproverPanels\KeyImproverPanelFactory.cs" />
+    <Compile Include="View\Improvement\ImproverPanels\KeyImproverPanelGenetics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Improvement\ImproverPanels\KeyImproverPanelGenetics.Designer.cs">
+      <DependentUpon>KeyImproverPanelGenetics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Improvement\KeyImprovementPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Improvement\KeyImprovementPanel.Designer.cs">
+      <DependentUpon>KeyImprovementPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\KeySearchPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Search\KeySearchPanelFactory.cs" />
+    <Compile Include="View\Search\KeySearchPanelMono.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Search\KeySearchPanelMono.Designer.cs">
+      <DependentUpon>KeySearchPanelMono.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\KeySearchPanelPoly.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Search\KeySearchPanelPoly.Designer.cs">
+      <DependentUpon>KeySearchPanelPoly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\KeySearchPanelVigenere.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Search\KeySearchPanelVigenere.Designer.cs">
+      <DependentUpon>KeySearchPanelVigenere.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainFormNew.resx">
+      <DependentUpon>MainFormNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -89,6 +174,42 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\Analysis\KeyAnalysisPanel.resx">
+      <DependentUpon>KeyAnalysisPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Analysis\KeyAnalysisPanelGlobal.resx">
+      <DependentUpon>KeyAnalysisPanelGlobal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Analysis\KeyAnalysisPanelPoly.resx">
+      <DependentUpon>KeyAnalysisPanelPoly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Analysis\KeyAnalysisPanelVigenere.resx">
+      <DependentUpon>KeyAnalysisPanelVigenere.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Improvement\ImproverPanels\KeyImproverPanel.resx">
+      <DependentUpon>KeyImproverPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Improvement\ImproverPanels\KeyImproverPanelAnnealing.resx">
+      <DependentUpon>KeyImproverPanelAnnealing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Improvement\ImproverPanels\KeyImproverPanelAStar.resx">
+      <DependentUpon>KeyImproverPanelAStar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Improvement\ImproverPanels\KeyImproverPanelGenetics.resx">
+      <DependentUpon>KeyImproverPanelGenetics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Improvement\KeyImprovementPanel.resx">
+      <DependentUpon>KeyImprovementPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Search\KeySearchPanelMono.resx">
+      <DependentUpon>KeySearchPanelMono.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Search\KeySearchPanelPoly.resx">
+      <DependentUpon>KeySearchPanelPoly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Search\KeySearchPanelVigenere.resx">
+      <DependentUpon>KeySearchPanelVigenere.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

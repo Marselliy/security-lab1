@@ -30,6 +30,8 @@ namespace security_lab1_csharp
         private TextBox[] polyKeyBoxesSimple;
         public MainForm()
         {
+            MainFormNew test = new MainFormNew();
+            test.Show();
             List<KeyValuePair<string, double>> letterFreqList = Util.getTheorNGramFrequency(1).ToList();
             letterFreqList.Sort(
                 delegate (KeyValuePair<string, double> pair1,
@@ -373,6 +375,8 @@ namespace security_lab1_csharp
         {
             KeyFinderVigenere keyFinder = new KeyFinderVigenere();
             KeyVigenere key = (KeyVigenere) keyFinder.FindKey(textBoxSource.Text);
+            KeyImproverAStar improver = new KeyImproverAStar(new KeyRaterCount(3, textBoxSource.Text));
+            key = (KeyVigenere) improver.ImproveKey(key, 300);
             textBoxResult.Text = key.ApplyKey(textBoxSource.Text);
             textBoxVigKey.Text = key.shifts;
         }
@@ -391,8 +395,8 @@ namespace security_lab1_csharp
             //    new KeyRaterXi2(3, textBoxSource.Text)
             //    )), 60);
             var keyFinder = new KeyFinderPoly(new KeyImproverGenetics(100, 0.2, new KeyRaterComplex(textBoxSource.Text,
-                new KeyRaterDictionary(textBoxSource.Text, new[] { "DECIPHER", "CIPHER", "ALPHABET", "VIGENERE" }),
-                new KeyRaterXi2(3, textBoxSource.Text)
+                new KeyRaterCount(3, textBoxSource.Text),
+                new KeyRaterCount(2, textBoxSource.Text)
                 ), new KeyRaterCount(2, textBoxSource.Text), new KeyRaterCount(3, textBoxSource.Text)), 100);
             KeyPoly polyKey = (KeyPoly) keyFinder.FindKey(textBoxSource.Text);
             

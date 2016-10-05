@@ -11,6 +11,28 @@ namespace security_lab1_csharp.Core.KeyImpovers
         private double mutationRate;
         private KeyRater[] keyRatersInitial;
         private KeyRater mainKeyRater;
+        public void SetPopulationSize(int pS)
+        {
+            populationSize = pS;
+        }
+
+        public void SetMutationRate(double mR)
+        {
+            mutationRate = mR;
+        }
+
+        public void SetKeyRatersInitial(params KeyRater[] kR)
+        {
+            keyRatersInitial = kR;
+        }
+
+        public void SetMainKeyRater(KeyRater kR)
+        {
+            mainKeyRater = kR;
+        }
+        public KeyImproverGenetics()
+        {
+        }
 
         public KeyImproverGenetics(int populationSize, double mutationRate, KeyRater mainKeyRater, params KeyRater[] keyRatersInitial)
         {
