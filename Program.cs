@@ -18,7 +18,7 @@ namespace security_lab1_csharp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new MainFormNew());
         }
     }
 }

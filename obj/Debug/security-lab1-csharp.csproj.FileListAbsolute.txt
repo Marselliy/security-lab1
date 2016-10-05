@@ -2,7 +2,6 @@ E:\Flash\Документы\ІV курс\Безопасность\security-lab1-
 E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\bin\Debug\security-lab1-csharp.exe
 E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\bin\Debug\security-lab1-csharp.pdb
 E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security-lab1-csharp.csprojResolveAssemblyReference.cache
-E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.MainForm.resources
 E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security_lab1_csharp.Properties.Resources.resources
 E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security-lab1-csharp.csproj.GenerateResource.Cache
 E:\Flash\Документы\ІV курс\Безопасность\security-lab1-csharp\security-lab1-csharp\obj\Debug\security-lab1-csharp.exe
